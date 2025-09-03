@@ -66,14 +66,14 @@ resource "null_resource" "ansible" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install python3.12 python3.12-pip -y",
-      "sudo pip3.12 install ansible",
+      "sudo pip3.12 install ansible hvac",
       "ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Ansible-Roboshop.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}"
     ]
   }
 }
 
 resource "azurerm_dns_a_record" "dns_record" {
-  name                = var.name
+  name                = "${var.name}-dev"
   zone_name           = var.zone_name
   resource_group_name = var.dns_record_rg_name
   ttl                 = 3
