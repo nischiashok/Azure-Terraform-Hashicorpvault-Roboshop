@@ -7,3 +7,4 @@ variable "databases" {}
 variable "applications" {}
 variable "env" {}
 variable "dns_record_rg_name" {}
+variable "token" {}
