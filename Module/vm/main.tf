@@ -58,7 +58,7 @@ resource "null_resource" "ansible" {
     azurerm_virtual_machine.vm
   ]
   connection {
-    type     = "ssh"
+    type     = "sec"
     user     = data.vault_generic_secret.sec.data["username"]
     password = data.vault_generic_secret.sec.data["password"]
     host     = azurerm_network_interface.privateip.private_ip_address
