@@ -1,6 +1,6 @@
 data "vault_generic_secret" "ssh" {
-  path = "roboshop-infra"
+  path = "roboshop-infra/ssh"
 }
 data "vault_generic_secret" "ssh" {
-  path = "roboshop-dev"
+  path = "roboshop-dev/ssh"
 }
