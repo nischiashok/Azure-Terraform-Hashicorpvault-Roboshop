@@ -1,3 +1,3 @@
 data "vault_generic_secret" "SSH" {
-  path = "roboshop-dev"
+  path = "roboshop-dev/SSH"
 }
