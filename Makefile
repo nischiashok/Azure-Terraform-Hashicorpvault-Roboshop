@@ -22,3 +22,5 @@ prod-destroy:
 	rm -rf .terraform/terraform.tfstate
 	terraform init -backend-config=environments/prod/state.tfvars
 	terraform destroy -auto-approve -var-file=environments/prod/main.tfvars -var token=$(token)
+
+
