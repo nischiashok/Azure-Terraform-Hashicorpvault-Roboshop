@@ -72,6 +72,7 @@ resource "null_resource" "ansible" {
   }
 }
 
+
 resource "azurerm_dns_a_record" "dns_record" {
   name                = "${var.name}-dev"
   zone_name           = var.zone_name
