@@ -44,8 +44,8 @@ resource "azurerm_virtual_machine" "vm" {
 
   os_profile {
     computer_name  = " var.name "
-    admin_username = data.vault_generic_secret./demo/data/SSH["username"]
-    admin_password = data.vault_generic_secret./demo/data/SSH["password"]
+    admin_username = data.vault_generic_secret.SSH.data["username"]
+    admin_password = data.vault_generic_secret.SSH.data["password"]
   }
 
   os_profile_linux_config {
@@ -59,8 +59,8 @@ resource "null_resource" "ansible" {
   ]
   connection {
     type     = "SSH"
-    user     = data.vault_generic_secret./demo/data/SSH["username"]
-    password = data.vault_generic_secret./demo/data/SSH["password"]
+    user     = data.vault_generic_secret.SSH.data["username"]
+    password = data.vault_generic_secret.SSH.data["password"]
     host     = azurerm_network_interface.privateip.private_ip_address
   }
   provisioner "remote-exec" {
