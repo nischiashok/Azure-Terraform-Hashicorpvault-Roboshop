@@ -57,20 +57,20 @@ resource "null_resource" "ansible" {
   depends_on = [
     azurerm_virtual_machine.vm
   ]
-#   connection {
-#     type     = "ssh"
-#     user     = data.vault_generic_secret.ssh.data["username"]
-#     password = data.vault_generic_secret.ssh.data["password"]
-#     host     = azurerm_network_interface.privateip.private_ip_address
-#   }
-    provisioner "remote-exec" {
-      inline = [
-        "sudo dnf -y update || true",
-        "sudo dnf -y install python3 python3-pip || sudo apt-get update && sudo apt-get -y install python3 python3-pip",
-        "sudo python3 -m pip install --upgrade pip",
-        "sudo python3 -m pip install ansible hvac",
+  connection {
+    type     = "ssh"
+    user     = data.vault_generic_secret.ssh.data["username"]
+    password = data.vault_generic_secret.ssh.data["password"]
+    host     = azurerm_network_interface.privateip.private_ip_address
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo dnf -y update || true",
+      "sudo dnf -y install python3 python3-pip || sudo apt-get update && sudo apt-get -y install python3 python3-pip",
+      "sudo python3 -m pip install --upgrade pip",
+      "sudo python3 -m pip install ansible hvac",
         # run ansible-pull under bash to avoid PATH issues
-        "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
+      "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
 
 #   provisioner "remote-exec" {
 #     inline = [
