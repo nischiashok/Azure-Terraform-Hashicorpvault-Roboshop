@@ -59,7 +59,7 @@ resource "null_resource" "ansible" {
     type     = "ssh"
     user     = data.vault_generic_secret.ssh.data["username"]
     password = data.vault_generic_secret.ssh.data["password"]
-    host     = azurerm_network_interface.privateip.private_ip_address
+    host     = azurerm_public_ip.publicip.id
   }
 
   provisioner "remote-exec" {
