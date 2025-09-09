@@ -82,21 +82,16 @@ connection {
 
 provisioner "remote-exec" {
   inline = [
-    # make script robust and use correct package names:
-    # 1) update & install python3 and pip
-    "sudo dnf -y update || true",
-    "sudo dnf -y install python3 python3-pip || sudo apt-get update && sudo apt-get -y install python3 python3-pip || true",
-    # 2) ensure pip uses python3
-    "sudo python3 -m pip install --upgrade pip",
-    "sudo python3 -m pip install ansible hvac",
-    # 3) run ansible-pull via python -m to avoid PATH issues, and enable tracing
-    "sudo bash -lc 'set -x; python3 -m ansible.__main__ --version || true'",
-    # run ansible-pull (use -c to run under bash and preserve vars)
-    "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
-  ]
+        "sudo dnf -y update || true",
+        "sudo dnf -y install python3 python3-pip || sudo apt-get update && sudo apt-get -y install python3 python3-pip",
+        "sudo python3 -m pip install --upgrade pip",
+        "sudo python3 -m pip install ansible hvac",
+        # run ansible-pull under bash to avoid PATH issues
+        "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/…/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
+      ]
+    }
+}
 
-}
-}
 
 
 resource "azurerm_dns_a_record" "dns_record" {
