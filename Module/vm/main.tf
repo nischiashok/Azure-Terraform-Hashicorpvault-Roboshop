@@ -70,7 +70,7 @@ resource "null_resource" "ansible" {
         "sudo python3 -m pip install --upgrade pip",
         "sudo python3 -m pip install ansible hvac",
         # run ansible-pull under bash to avoid PATH issues
-        "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/…/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
+        "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
 
 #   provisioner "remote-exec" {
 #     inline = [
