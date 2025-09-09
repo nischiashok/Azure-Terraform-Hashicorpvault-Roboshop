@@ -57,19 +57,45 @@ resource "null_resource" "ansible" {
   depends_on = [
     azurerm_virtual_machine.vm
   ]
-  connection {
-    type     = "ssh"
-    user     = data.vault_generic_secret.ssh.data["username"]
-    password = data.vault_generic_secret.ssh.data["password"]
-    host     = azurerm_network_interface.privateip.private_ip_address
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo dnf install python3 python3 -pip -y",
-      "sudo pip3 install ansible hvac",
-      "ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}"
-    ]
-  }
+#   connection {
+#     type     = "ssh"
+#     user     = data.vault_generic_secret.ssh.data["username"]
+#     password = data.vault_generic_secret.ssh.data["password"]
+#     host     = azurerm_network_interface.privateip.private_ip_address
+#   }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo dnf install python3 python3 -pip -y",
+#       "sudo pip3 install ansible hvac",
+#       "ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}"
+#     ]
+#   }
+# }
+connection {
+  type     = "ssh"
+  user     = data.vault_generic_secret.ssh.data["username"]
+  password = data.vault_generic_secret.ssh.data["password"]
+  # use the public IP address assigned to the VM's public ip resource
+  host     = azurerm_public_ip.publicip.ip_address
+  # optionally add: timeout = "2m"
+}
+
+provisioner "remote-exec" {
+  inline = [
+    # make script robust and use correct package names:
+    # 1) update & install python3 and pip
+    "sudo dnf -y update || true",
+    "sudo dnf -y install python3 python3-pip || sudo apt-get update && sudo apt-get -y install python3 python3-pip || true",
+    # 2) ensure pip uses python3
+    "sudo python3 -m pip install --upgrade pip",
+    "sudo python3 -m pip install ansible hvac",
+    # 3) run ansible-pull via python -m to avoid PATH issues, and enable tracing
+    "sudo bash -lc 'set -x; python3 -m ansible.__main__ --version || true'",
+    # run ansible-pull (use -c to run under bash and preserve vars)
+    "sudo bash -lc 'ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}'"
+  ]
+
+}
 }
 
 
