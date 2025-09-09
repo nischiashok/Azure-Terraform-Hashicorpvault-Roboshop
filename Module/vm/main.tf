@@ -65,8 +65,8 @@ resource "null_resource" "ansible" {
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo dnf install python3 python3 -pip -y",
-      "sudo pip3 install ansible hvac",
+      "sudo dnf install python3 python3.12 -pip -y",
+      "sudo pip3.12 install ansible hvac",
       "ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}"
     ]
   }
