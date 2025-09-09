@@ -43,7 +43,7 @@ resource "azurerm_virtual_machine" "vm" {
   }
 
   os_profile {
-    computer_name  = " var.name "
+    computer_name  = "var.name"
     admin_username = data.vault_generic_secret.ssh.data["username"]
     admin_password = data.vault_generic_secret.ssh.data["password"]
   }
