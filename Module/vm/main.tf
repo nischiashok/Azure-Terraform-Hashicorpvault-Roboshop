@@ -67,7 +67,7 @@ resource "null_resource" "ansible" {
     inline = [
       "sudo dnf install python3 python3 -pip -y",
       "sudo pip3 install ansible hvac",
-      "ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Ansible-Roboshop.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}"
+      "ansible-pull -i localhost, -U https://github.com/nischiashok/Azure-Roboshop-Terraform-ansible.git roboshop.yml -e app_name=${var.name} -e env=dev -e token=${var.token}"
     ]
   }
 }
