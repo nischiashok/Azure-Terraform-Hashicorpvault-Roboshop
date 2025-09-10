@@ -54,7 +54,9 @@ resource "azurerm_virtual_machine" "vm" {
 }
 
 resource "null_resource" "ansible" {
-  depends_on = [azurerm_virtual_machine.vm]
+  depends_on = [
+    azurerm_virtual_machine.vm
+  ]
   connection {
     type     = "ssh"
     user     = data.vault_generic_secret.ssh.data["username"]
