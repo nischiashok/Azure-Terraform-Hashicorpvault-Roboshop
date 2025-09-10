@@ -7,44 +7,40 @@ dns_record_rg_name         = "project-setup-1"
 network_security_group_id  = "/subscriptions/e0be8e24-25e7-4901-ad14-ea389c0f1289/resourceGroups/project-setup-1/providers/Microsoft.Network/networkSecurityGroups/allow-all"
 
 databases = {
-  mongodb   = {
+  mongodb = {
     rgname = "ukwest"
   }
-  rabbitmq  = {
+  rabbitmq = {
     rgname = "ukwest"
   }
-  mysql     = {
+  mysql = {
     rgname = "ukwest"
   }
-  redis     = {
-    rgname = "ukwest"
-  }
-}
-
-applications  = {
-  catalogue   = {
-    rgname = "ukwest"
-  }
-  user        = {
-    rgname = "ukwest"
-  }
-  cart        = {
-    rgname = "ukwest"
-  }
-  shipping    = {
-    rgname = "ukwest"
-  }
-  payment     = {
-    rgname = "ukwest"
-  }
-  frontend    = {
+  redis = {
     rgname = "ukwest"
   }
 }
-
-
+applications = {
+  catalogue = {
+    rgname = "ukwest"
+  }
+  user = {
+    rgname = "ukwest"
+  }
+  cart = {
+    rgname = "ukwest"
+  }
+  payment = {
+    rgname = "ukwest"
+  }
+  shipping = {
+    rgname = "ukwest"
+  }
+  frontend = {
+    rgname = "ukwest"
+  }
+}
 rg_name = {
   ukwest = {
-    location = "UK West"
   }
 }
